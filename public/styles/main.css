@@ -1,0 +1,104 @@
+/*
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+*/
+
+body {
+  background: #fafafa;
+  font-family: 'Roboto', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  color: #333;
+}
+
+.ticker-header {
+  background-color: #00b4f0;
+  color:white;
+  padding-left:48px;
+  padding-right:8px;
+  padding-top:8px;
+  padding-bottom:8px;
+}
+
+.ticker-header-first-row {
+  display:flex;
+}
+
+.ticker-header-second-row {
+  padding-top:8px;
+}
+
+.app-name {
+  font-size: 40px;
+  font-weight: 300;
+}
+
+.white {
+  color: white;
+}
+
+.main-layout {
+  background-color: steelblue;
+  height:100%;
+  display:flex;
+  flex-direction: column;
+}
+
+.main-layout > p {
+  flex:1;
+}
+
+.ticker-content {
+  flex:1;
+  overflow:scroll;
+  display: flex;
+}
+
+.pages {
+  flex:1;
+  flex-direction: column;
+  display:flex;
+  padding:32px;
+}
+
+.graphs {
+  display:flex;
+  flex:1;
+}
+
+paper-material {
+  border-radius: 2px;
+  height: 100%;
+  padding: 16px 0 16px 0;
+  width: calc(98.66% - 16px);
+  margin: 16px auto;
+  background: #FFF;
+}
+
+.v-grid-body.v-grid tr.v-grid {
+  height: 20px;
+}
+
+.v-grid-header.v-grid tr.v-grid {
+    height: 20px;
+}
+.v-grid-cell.v-grid {
+    transition: none;
+}
+.v-grid-row.v-grid:after {
+    transition: none;
+}
+
+.floatleft {
+  float: left;
+}
+
+.floatright {
+  float: right;
+}
+
+.floatclear {
+  clear: both;
+}

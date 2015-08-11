@@ -1,0 +1,34 @@
+{
+  "name": "vaadin-components",
+  "version": "0.3.0-beta5",
+  "authors": [
+    "Vaadin Ltd"
+  ],
+  "description": "Vaadin Components is an evolving set of custom HTML elements, built using Polymer, for building mobile and desktop web applications in modern browsers.",
+  "license": "Apache License 2.0",
+  "keywords": [
+    "web-components"
+  ],
+  "main": "vaadin-components.html",
+  "ignore": [
+    "**/.*",
+    "**/node_modules",
+    "**/bower_components",
+    "**/test",
+    "**/tests"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#v1.0.2"
+  },
+  "homepage": "https://github.com/vaadin-bower/vaadin-components",
+  "_release": "0.3.0-beta5",
+  "_resolution": {
+    "type": "version",
+    "tag": "0.3.0-beta5",
+    "commit": "8e3c235da2539c428bc16eb193f92c0d70f85425"
+  },
+  "_source": "git://github.com/vaadin-bower/vaadin-components.git",
+  "_target": "0.3.0-beta5",
+  "_originalSource": "vaadin-components",
+  "_direct": true
+}

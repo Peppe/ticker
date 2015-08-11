@@ -1,0 +1,14 @@
+{
+  "dest": "target",
+  "temp": "target/tmp",
+  "files": {
+    "src": [
+      "v-chart.html",
+      "v-series.html",
+      "valo-theme.html"
+    ],
+    "doc": "*.md",
+    "demo": "demo/*"
+  },
+  "version": "3.0.0-alpha2"
+}

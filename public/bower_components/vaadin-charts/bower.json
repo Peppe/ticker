@@ -1,0 +1,41 @@
+{
+  "name": "vaadin-charts",
+  "version": "3.0.0-alpha2",
+  "description": "Vaadin Charts Web Components",
+  "authors": [
+    "Vaadin Ltd"
+  ],
+  "keywords": [
+    "web-component",
+    "web-components",
+    "polymer",
+    "vaadin",
+    "charts",
+    "highcharts"
+  ],
+  "main": "v-chart.html",
+  "license": "https://github.com/vaadin/charts-component/LICENSE.md",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:vaadin/charts-component.git"
+  },
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "demo",
+    "index.html"
+  ],
+  "dependencies": {
+    "polymer": "Polymer/polymer#^1.0.0"
+  },
+  "devDependencies": {
+    "iron-menu-behavior": "PolymerElements/iron-menu-behavior#^1.0.0",
+    "iron-doc-viewer": "PolymerElements/iron-doc-viewer#^1.0.0",
+    "paper-tabs": "PolymerElements/paper-tabs#^1.0.0",
+    "iron-ajax": "PolymerElements/iron-ajax#^1.0.0",
+    "iron-pages": "PolymerElements/iron-pages#^1.0.0",
+    "web-component-tester": "*"
+  }
+}
