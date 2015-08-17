@@ -38,13 +38,13 @@
     "web-component-tester": "*"
   },
   "homepage": "https://github.com/vaadin/charts-component",
-  "_release": "49190f8037",
+  "_release": "d9bb383b14",
   "_resolution": {
     "type": "commit",
-    "commit": "49190f80372"
+    "commit": "d9bb383b14b48dccc3c714095d0d4df08193852b"
   },
-  "_source": "https://github.com/vaadin/charts-component.git",
-  "_target": "49190f80372",
-  "_originalSource": "https://github.com/vaadin/charts-component.git",
+  "_source": "git://github.com/vaadin/charts-component.git",
+  "_target": "d9bb383b14b48dccc3c714095d0d4df08193852b",
+  "_originalSource": "vaadin-charts",
   "_direct": true
 }

@@ -5,10 +5,11 @@
     "src": [
       "v-chart.html",
       "v-series.html",
-      "valo-theme.html"
+      "valo-theme.html",
+      "configuration-reader.html"
     ],
     "doc": "*.md",
-    "demo": "demo/*"
+    "demo": "demo/**/*"
   },
-  "version": "3.0.0-alpha2"
+  "version": "3.0.0-alpha3"
 }

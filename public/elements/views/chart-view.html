@@ -35,7 +35,15 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
   .ticker-table {
     flex: 1;
+    display: flex;
+    flex-direction: column;
   }
+
+  #trade_asks, 
+  #trade_bids {
+    /* v-grid seems to be broken for this to work */
+    /* flex: 1;*/
+}
 
   .ticker-volume {
     padding: 0;
@@ -73,24 +81,24 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         <price-chart></price-chart>
       </paper-material>
       <paper-material class="ticker-volume" elevation="1" style="padding:0;width:100%">
-        <v-chart id="basic-column" type="column" style="height:200px">
-          <title text=""></title>
-          <subtitle></subtitle>
-          <x-axis>
-              <categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</categories>
-              <labels auto-rotation="0" step="4"></labels>
-          </x-axis>
-          <y-axis min="0">
-              <labels y="-2" x="2" align="left"></labels>
-              <title align="high" x="8" y="-10">Volume</title>
-          </y-axis>
-          <chart height="200" spacing-bottom="10" spacing-top="20" spacing-left="0" spacing-right="10"></chart>
-          <legend enabled="false"></legend>
+        <v-chart id="basic-column" vc-type="column" style="height:200px">
+          <vc-title vc-text=""></vc-title>
+          <vc-subtitle></vc-subtitle>
+          <vc-x-axis>
+              <vc-categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</vc-categories>
+              <vc-labels vc-auto-rotation="0" vc-step="4"></vc-labels>
+          </vc-x-axis>
+          <vc-y-axis vc-min="0">
+              <vc-labels vc-y="-2" vc-x="2" vc-align="left"></vc-labels>
+              <vc-title vc-align="high" vc-x="8" vc-y="-10">Volume</vc-title>
+          </vc-y-axis>
+          <vc-chart vc-height="200" vc-spacing-bottom="10" vc-spacing-top="20" vc-spacing-left="0" vc-spacing-right="10"></vc-chart>
+          <vc-legend vc-enabled="false"></vc-legend>
 
           <v-series name="Volume">
-              <data>302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86</data>
+              <vc-data>302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86</vc-data>
           </v-series>
-      </v-chart>
+        </v-chart>
       </paper-material>
     </div>
     <div class="graphs-right-side">

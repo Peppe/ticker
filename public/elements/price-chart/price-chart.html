@@ -21,34 +21,34 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     }
   </style>
   <template>
-    <v-chart id="chart" type="line">
+    <v-chart id="chart" vc-type="line">
 
 
       <tooltip formatter="function() {return '' + this.series.name + ' ' + this.x + ': ' + this.y + '°C';}"></tooltip>
 
-      <plot-options>
-          <line>
-              <data-labels enabled="true"></data-labels>
-          </line>
-      </plot-options>
+      <vc-plot-options>
+          <vc-line>
+              <vc-data-labels vc-enabled="true"></vc-data-labels>
+          </vc-line>
+      </vc-plot-options>
 
-      <title>{{title}}</title>
-      <subtitle text=""></subtitle>
-      <x-axis>
-          <categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</categories>
-          <labels auto-rotation="0" step="4"></labels>
-      </x-axis>
+      <vc-title vc-text=""></vc-title>
+      <vc-subtitle vc-text=""></vc-subtitle>
+      <vc-x-axis>
+          <vc-categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</vc-categories>
+          <vc-labels auto-rotation="0" step="4"></vc-labels>
+      </vc-x-axis>
 
-      <y-axis>
-          <labels y="-2" x="2" align="left"></labels>
-          <title align="high" x="8" y="-10">Price ($)</title>
-      </y-axis>
-      <chart spacing-bottom="10" spacing-top="20" spacing-left="0" spacing-right="10"></chart>
-      <legend enabled="false"></legend>
+      <vc-y-axis>
+          <vc-labels vc-y="-2" vc-x="2" vc-align="left"></vc-labels>
+          <vc-title vc-align="high" vc-x="8" vc-y="-10">Price ($)</vc-title>
+      </vc-y-axis>
+      <vc-chart vc-spacing-bottom="10" vc-spacing-top="20" vc-spacing-left="0" vc-spacing-right="10"></vc-chart>
+      <vc-legend vc-enabled="false"></vc-legend>
 
-      <v-series name="test" data="200,600,300"></v-series>
-      <v-series name="Price" data="{{data}}">
-          <data>302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86</data>
+      <v-series vc-name="test" vc-data="200,600,300"></v-series>
+      <v-series vc-name="Price" vc-data="{{data}}">
+          <vc-data>302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86</vc-data>
       </v-series>
     </v-chart>
     <script type="text/javascript">
@@ -71,9 +71,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             notify: true,
             value: function() { return [1,2,3,4,5,6,7,8,9]; }
           }
-          //data:
         },
-        ready: function(){
+        attached: function(){
           var highchartsObject = this.$.chart.chart
           console.log(highchartsObject);
           var data = [
@@ -84,7 +83,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
             [1184284800000,41.18],
             [1184544000000,41.06],
             [1184630400000,41.47]];
-          //highchartsObject.series[0].setData(data);
+          highchartsObject.series[0].setData(data);
         }
       });
     })();
