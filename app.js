@@ -12,7 +12,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 var price = require('./routes/price');
 app.use('/price', price);
 
-var server = app.listen(3000, function () {
+var server = app.listen(.listen(process.env.PORT || 3000), function () {
   var host = server.address().address;
   var port = server.address().port;
 
