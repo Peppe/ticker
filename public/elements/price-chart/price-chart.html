@@ -76,9 +76,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         },
         attached: function(){
           var component = this;
-          this.async(function () {
-            var highchartsObject = this.$.chart.chart
-            $.getJSON( "/price/transactions", function( data ) {
+          $.getJSON( "/price/transactions", function( data ) {
               var array = [];
               data.forEach(function putToArray(element) {
                 array.push([parseFloat(element.date), parseFloat(element.price)]);
@@ -88,9 +86,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
                 return a[0] - b[0];
               });
               component.data = array;
-            }); 
-          }, 1);
-  
+            });
         }
       });
     })();
