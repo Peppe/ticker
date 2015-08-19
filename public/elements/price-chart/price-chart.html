@@ -34,9 +34,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <vc-title vc-text=""></vc-title>
       <vc-subtitle vc-text=""></vc-subtitle>
-      <vc-x-axis>
-          <vc-categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</vc-categories>
-          <vc-labels vc-auto-rotation="0" vc-step="4"></vc-labels>
+      <vc-x-axis vc-type="datetime">
+          <vc-categories></vc-categories>
+          <vc-labels vc-auto-rotation="0" vc-format="{value:%H:%M:%S}"></vc-labels>
       </vc-x-axis>
 
       <vc-y-axis>
@@ -46,13 +46,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <vc-chart vc-spacing-bottom="10" vc-spacing-top="20" vc-spacing-left="0" vc-spacing-right="10"></vc-chart>
       <vc-legend vc-enabled="false"></vc-legend>
 
-      <v-series vc-name="test" vc-data="200,600,300"></v-series>
       <v-series vc-name="Price" vc-data="{{data}}">
-          <vc-data>302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86</vc-data>
+          <!--<vc-data>
+          [302, 124], [377, 316], [577, 639], [468, 371], [53, 493], [750, 528], [863, 217], [987, 546], [775, 258], [300, 460], [213, 464], [306, 426], [896, 356], [78, 107], [692, 521], [840, 549], [974, 830], [805, 773], [821, 901], [285, 224], [910, 96], [939, 409], [928, 598], [103, 288], [652, 595], [510, 995], [628, 159], [855, 979], [228, 740], [345, 86]</vc-data>-->
       </v-series>
     </v-chart>
     <script type="text/javascript">
-      //console.log(document.querySelector('#price-chart').chart);
+      console.log(document.querySelector('#chart').chart);
     </script>
   </template>
 
@@ -69,21 +69,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           data: {
             type: Array,
             notify: true,
-            value: function() { return [1,2,3,4,5,6,7,8,9]; }
+            value: function() { 
+              return [[1,1],[2,3],[3,7],[4,10],[5,4],[6,2],[7,9],[8,7]]; 
+            }
           }
         },
         attached: function(){
-          var highchartsObject = this.$.chart.chart
-          console.log(highchartsObject);
-          var data = [
-            [1183939200000,40.71],
-            [1184025600000,40.38],
-            [1184112000000,40.82],
-            [1184198400000,41.55],
-            [1184284800000,41.18],
-            [1184544000000,41.06],
-            [1184630400000,41.47]];
-          highchartsObject.series[0].setData(data);
+          var component = this;
+          this.async(function () {
+            var highchartsObject = this.$.chart.chart
+            $.getJSON( "/price/transactions", function( data ) {
+              var array = [];
+              data.forEach(function putToArray(element) {
+                array.push([parseFloat(element.date), parseFloat(element.price)]);
+              });
+              console.log(array);
+              array.sort(function(a, b) {
+                return a[0] - b[0];
+              });
+              component.data = array;
+            }); 
+          }, 1);
+  
         }
       });
     })();
