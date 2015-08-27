@@ -24,7 +24,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <v-chart id="chart" vc-type="line">
 
 
-      <tooltip formatter="function() {return '' + this.series.name + ' ' + this.x + ': ' + this.y + '°C';}"></tooltip>
+      <!--<vc-tooltip vc-formatter="function() {return '' + this.series.name + ' ' + this.x + ': ' + this.y + '°C';}"></vc-tooltip>-->
 
       <vc-plot-options>
           <vc-line>
@@ -34,10 +34,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
       <vc-title vc-text=""></vc-title>
       <vc-subtitle vc-text=""></vc-subtitle>
-      <vc-x-axis vc-type="datetime">
-          <vc-categories></vc-categories>
-          <vc-labels vc-auto-rotation="0" vc-format="{value:%H:%M:%S}"></vc-labels>
-      </vc-x-axis>
+      <vc-x-axis vc-type="datetime"></vc-x-axis>
 
       <vc-y-axis>
           <vc-labels vc-y="-2" vc-x="2" vc-align="left"></vc-labels>
