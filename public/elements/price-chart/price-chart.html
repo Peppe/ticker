@@ -1,92 +1,67 @@
-<!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
--->
-
 <dom-module id="price-chart">
   <style>
     :host {
-      display: block;
+      display: flex;
+      flex:1;
     }
 
-    @media (max-width: 600px) {
-      h1.paper-font-display1 {
-        font-size: 24px;
-      }
+    .chart {
+      display: block;
+      width:100%;
+      flex:1;
     }
   </style>
   <template>
-    <v-chart id="chart" vc-type="line">
+    <vaadin-line-chart id="chart" style="padding:10px">
+      <title text=""></title>
+      <subtitle text=""></subtitle>
+      <x-axis type="datetime"></x-axis>
 
-
-      <!--<vc-tooltip vc-formatter="function() {return '' + this.series.name + ' ' + this.x + ': ' + this.y + '°C';}"></vc-tooltip>-->
-
-      <vc-plot-options>
-          <vc-line>
-              <vc-data-labels vc-enabled="true"></vc-data-labels>
-          </vc-line>
-      </vc-plot-options>
-
-      <vc-title vc-text=""></vc-title>
-      <vc-subtitle vc-text=""></vc-subtitle>
-      <vc-x-axis vc-type="datetime"></vc-x-axis>
-
-      <vc-y-axis>
-          <vc-labels vc-y="-2" vc-x="2" vc-align="left"></vc-labels>
-          <vc-title vc-align="high" vc-x="8" vc-y="-10">Price ($)</vc-title>
-      </vc-y-axis>
-      <vc-chart vc-spacing-bottom="10" vc-spacing-top="20" vc-spacing-left="0" vc-spacing-right="10"></vc-chart>
-      <vc-legend vc-enabled="false"></vc-legend>
-
-      <v-series vc-name="Price" vc-data="{{data}}">
-          <!--<vc-data>
-          [302, 124], [377, 316], [577, 639], [468, 371], [53, 493], [750, 528], [863, 217], [987, 546], [775, 258], [300, 460], [213, 464], [306, 426], [896, 356], [78, 107], [692, 521], [840, 549], [974, 830], [805, 773], [821, 901], [285, 224], [910, 96], [939, 409], [928, 598], [103, 288], [652, 595], [510, 995], [628, 159], [855, 979], [228, 740], [345, 86]</vc-data>-->
-      </v-series>
-    </v-chart>
+      <y-axis>
+          <labels y="-2" x="2" align="left"></labels>
+          <title align="high" x="4" y="-10">Price ($)</title>
+      </y-axis>
+      <chart spacing-bottom="10" spacing-top="20" spacing-left="0" spacing-right="10"></chart>
+      <legend enabled="false"></legend>
+      
+      <data-series name="Price" data="[[data]]" color="#512DA8"></data-series>
+    </vaadin-line-chart>
     <script type="text/javascript">
       console.log(document.querySelector('#chart').chart);
     </script>
   </template>
 
   <script>
-    (function() {
-      Polymer({
-        is: 'price-chart',
+    Polymer({
+      is: 'price-chart',
 
-        properties: {
-          title: {
-            type: String,
-            value: "Price"
-          },
-          data: {
-            type: Array,
-            notify: true,
-            value: function() { 
-              return [[1,1],[2,3],[3,7],[4,10],[5,4],[6,2],[7,9],[8,7]]; 
-            }
-          }
+      properties: {
+        title: {
+          type: String,
+          value: "Price"
         },
-        attached: function(){
-          var component = this;
-          $.getJSON( "/price/transactions", function( data ) {
-              var array = [];
-              data.forEach(function putToArray(element) {
-                array.push([parseFloat(element.date), parseFloat(element.price)]);
-              });
-              console.log(array);
-              array.sort(function(a, b) {
-                return a[0] - b[0];
-              });
-              component.data = array;
-            });
+        data: {
+          type: Array,
+          notify: true,
+          value: function() { 
+            return []; 
+          }
         }
-      });
-    })();
+      },
+      attached: function(){
+        var component = this;
+        $.getJSON( "/price/transactions", function( data ) {
+            var array = [];
+            data.forEach(function putToArray(element) {
+              array.push([parseFloat(element.date), parseFloat(element.price)]);
+            });
+            console.log(array);
+            array.sort(function(a, b) {
+              return a[0] - b[0];
+            });
+            component.data = array;
+          });
+      }
+    });
   </script>
-
 </dom-module>

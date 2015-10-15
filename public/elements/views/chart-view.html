@@ -27,126 +27,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     flex-direction: column;
   }
 
-  .ticker-price {
-    flex: 1;
-    display:flex;
-    flex-direction: column;
-  }
-
   .ticker-table {
     flex: 1;
     display: flex;
     flex-direction: column;
   }
 
-  #trade_asks, 
-  #trade_bids {
-    /* v-grid seems to be broken for this to work */
+  .ticker-price {
     flex: 1;
-}
-
-  .ticker-volume {
-    padding: 0;
-  }
-
-  .price-chart {
-    flex:1;
-  }
-  #price-wrapper {
-    padding-top:16px;
-    padding-bottom: 16px;
-  }
-
-  #price-number {
-    color: steelblue;
-    text-align: center;
-    font-size: 48px;
-  }
-
-  #price-waiting {
-    padding-bottom:16px;
-    text-align: center;
-  }
-
-  #price-details,
-  #price-volume {
-    font-size: 12px;
-    color: #aaa;
+    display:flex;
+    flex-direction: column;
   }
 
   </style>
   <template>
     <div class="graphs-left-side">
-      <paper-material class="ticker-price" elevation="1" style="padding:0;width:100%;margin-bottom:0">
+      <paper-material class="ticker-price" elevation="4" style="width:100%;margin-bottom:0;display:flex">
         <price-chart></price-chart>
       </paper-material>
-      <paper-material class="ticker-volume" elevation="1" style="padding:0;width:100%">
-        <v-chart id="basic-column" vc-type="column" style="height:200px">
-          <vc-title vc-text=""></vc-title>
-          <vc-subtitle></vc-subtitle>
-          <vc-x-axis>
-              <vc-categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</vc-categories>
-              <vc-labels vc-auto-rotation="0" vc-step="4"></vc-labels>
-          </vc-x-axis>
-          <vc-y-axis vc-min="0">
-              <vc-labels vc-y="-2" vc-x="2" vc-align="left"></vc-labels>
-              <vc-title vc-align="high" vc-x="8" vc-y="-10">Volume</vc-title>
-          </vc-y-axis>
-          <vc-chart vc-height="200" vc-spacing-bottom="10" vc-spacing-top="20" vc-spacing-left="0" vc-spacing-right="10"></vc-chart>
-          <vc-legend vc-enabled="false"></vc-legend>
-
-          <v-series name="Volume">
-              <vc-data>302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86</vc-data>
-          </v-series>
-        </v-chart>
+      <paper-material class="ticker-volume" elevation="4" style="padding:0;width:100%">
+        <volume-chart></volume-chart>
       </paper-material>
     </div>
+    
     <div class="graphs-right-side">
-      <paper-material class="ticker-table" elevation="1">
-        <v-grid id="trade_asks">
-          <table>
-            <colgroup>
-              <col header-text="Price on asks">
-              <col header-text="Amount (BTC)">
-            </colgroup>
-            <tbody>
-              <tr><td>Waiting for data...</td><td></td></tr>
-            </tbody>
-          </table>
-        </v-grid>
-        <div style="text-align:center">
-          <div id="price-wrapper" style="display:inline-block">
-            <div id="price-volume" style="width:100%">
-              <div>
-                <div class="floatleft">24h Volume:</div>
-                <div class="floatright"><span>{{volume}}</span> BTC</div>
-                <div class="floatclear"></div>
-              </div>
-            </div>
-            <div id="price-number">$<span>{{price}}</span></div>
-            <div id="price-details" style="width:100%">
-              <div>
-                <div class="floatleft">Low: $<span>{{low}}</span></div>
-                <div class="floatright">High: $<span>{{high}}</span></div>
-                <div class="floatclear"></div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <script>
-          
-        </script>
-        <v-grid id="trade_bids">
-          <table>
-            <colgroup>
-              <col header-text="Price on bids">
-              <col header-text="Amount (BTC)">
-            </colgroup>
-            <tbody>
-              <tr><td>Waiting for data...</td><td></td></tr>
-            </tbody>
-          </table>
-        </v-grid>
+      <paper-material class="ticker-table" elevation="4">
+        <price-tables></price-tables>
       </paper-material>
     </div>
   </template>
@@ -154,60 +60,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <script>
     (function() {
       Polymer({
-        is: 'chart-view',
-
-        properties: {
-          price: String,
-          low: String,
-          high: String,
-          volume: String
-        },
-
-        ready: function() {
-          var component = this;
-          $.getJSON( "/price/ticker", function( json ) {
-            component.price = Number(json.last).toFixed(2);
-            component.high = Number(json.high).toFixed(2);
-            component.low = Number(json.low).toFixed(2);
-            component.volume = Number(json.volume).toFixed(2);
-          }); 
-          var pusher = new Pusher('de504dc5763aeef9ff52');
-          var trades_channel = pusher.subscribe('live_trades');
-          var component = this;
-          trades_channel.bind('trade', function(data) {
-            component.price = data['price'];
-          });
-          
-          var order_book = pusher.subscribe('order_book');
-          order_book.bind('data', function(data) {
-            var asks = $("#trade_asks").get(0);
-            var bids = $("#trade_bids").get(0);
-            
-            var asksData = data['asks'].slice(0, 10).reverse()
-            var bidsData = data['bids'].slice(0, 10);
-
-            if(!asks.data.source){
-              asks.data.source = asksData;
-            } else {
-              asksData.forEach(function(point, index){
-                asks.data.source[index][0] = point[0];
-                asks.data.source[index][1] = point[1];
-              });
-            }
-
-            if(!bids.data.source){
-              bids.data.source = bidsData;
-            } else {
-              bidsData.forEach(function(point, index){
-                bids.data.source[index][0] = point[0];
-                bids.data.source[index][1] = point[1];
-              });
-            }
-            
-            bids.data.clearCache();
-            asks.data.clearCache();
-          });
-        }
+        is: 'chart-view'
       });
     })();
   </script>

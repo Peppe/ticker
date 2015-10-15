@@ -1,0 +1,53 @@
+<dom-module id="volume-chart">
+  <style>
+    :host {
+      display: flex;
+      flex:1;
+    }
+    
+    .chart {
+      display:block;
+      width:100%;
+      flex:1;
+    }
+  </style>
+  <template>
+    <vaadin-column-chart id="chart" style="padding:10px">
+      <title text=""></title>
+      <subtitle></subtitle>
+      <x-axis>
+          <categories>Jan, Feb, Mar, Apr, May, Jun, Jul, Aug, Sep, Oct, Nov, Dec</categories>
+          <labels auto-rotation="0" step="4"></labels>
+      </x-axis>
+      <y-axis min="0">
+          <labels y="-2" x="2" align="left"></labels>
+          <title align="high" x="4" y="-10">Volume</title>
+      </y-axis>
+      <chart height="200" spacing-bottom="10" spacing-top="20" spacing-left="0" spacing-right="10"></chart>
+      <legend enabled="false"></legend>
+      <data-series name="Volume" data=[[data]] color="#512DA8">
+      </data-series>
+    </vaadin-column-chart>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'volume-chart',
+
+      properties: {
+        title: {
+          type: String,
+          value: "Price"
+        },
+        data: {
+          type: Array,
+          notify: true,
+          value: function() { 
+            return [302, 377, 316, 577, 639, 468, 371, 53, 493, 750, 528, 863, 217, 987, 546, 775, 258, 300, 460, 213, 464, 306, 426, 896, 356, 78, 107, 692, 521, 840, 549, 974, 830, 805, 773, 821, 901, 285, 224, 910, 96, 939, 409, 928, 598, 103, 288, 652, 595, 510, 995, 628, 159, 855, 979, 228, 740, 345, 86]; 
+          }
+        }
+      },
+      
+    });
+  </script>
+</dom-module>

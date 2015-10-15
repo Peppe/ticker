@@ -1,0 +1,144 @@
+<dom-module id="price-tables">
+  <style>
+    :host {
+      display: flex;
+      flex-direction:column;
+      flex:1;
+    }
+    
+    #trade_asks, 
+    #trade_bids {
+      /* v-grid seems to be broken for this to work */
+      flex: 1;
+    }
+
+    .ticker-volume {
+      padding: 0;
+    }
+
+    .price-chart {
+      flex:1;
+    }
+    #price-wrapper {
+      padding-top:16px;
+      padding-bottom: 16px;
+    }
+
+    #price-number {
+      color: steelblue;
+      text-align: center;
+      font-size: 48px;
+    }
+
+    #price-waiting {
+      padding-bottom:16px;
+      text-align: center;
+    }
+
+    #price-details,
+    #price-volume {
+      font-size: 12px;
+      color: #aaa;
+    }
+  </style>
+  <template>
+    <v-grid id="trade_asks">
+      <table>
+        <colgroup>
+          <col header-text="Price on asks">
+          <col header-text="Amount (BTC)">
+        </colgroup>
+        <tbody>
+          <tr><td>Waiting for data...</td><td></td></tr>
+        </tbody>
+      </table>
+    </v-grid>
+    <div style="text-align:center">
+      <div id="price-wrapper" style="display:inline-block">
+        <div id="price-volume" style="width:100%">
+          <div>
+            <div class="floatleft">24h Volume:</div>
+            <div class="floatright"><span>{{volume}}</span> BTC</div>
+            <div class="floatclear"></div>
+          </div>
+        </div>
+        <div id="price-number">$<span>{{price}}</span></div>
+        <div id="price-details" style="width:100%">
+          <div>
+            <div class="floatleft">Low: $<span>{{low}}</span></div>
+            <div class="floatright">High: $<span>{{high}}</span></div>
+            <div class="floatclear"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      
+    </script>
+    <v-grid id="trade_bids">
+      <table>
+        <colgroup>
+          <col header-text="Price on bids">
+          <col header-text="Amount (BTC)">
+        </colgroup>
+        <tbody>
+          <tr><td>Waiting for data...</td><td></td></tr>
+        </tbody>
+      </table>
+    </v-grid>
+  </template>
+
+  <script> 
+    Polymer({
+      is: 'price-tables',
+
+              properties: {
+        price: String,
+        low: String,
+        high: String,
+        volume: String
+      },
+
+      ready: function() {
+        console.log("foo");
+        var component = this;
+        $.getJSON( "/price/ticker", function( json ) {
+          component.price = Number(json.last).toFixed(2);
+          component.high = Number(json.high).toFixed(2);
+          component.low = Number(json.low).toFixed(2);
+          component.volume = Number(json.volume).toFixed(2);
+        }); 
+        var pusher = new Pusher('de504dc5763aeef9ff52');
+        var trades_channel = pusher.subscribe('live_trades');
+        var component = this;
+        trades_channel.bind('trade', function(data) {
+          component.price = data['price'];
+        });
+        
+        var order_book = pusher.subscribe('order_book');
+        order_book.bind('data', function(data) {
+          console.log("data recieved");
+          var asks = $("#trade_asks").get(0);
+          var bids = $("#trade_bids").get(0);
+          
+          var asksData = data['asks'].slice(0, 10).reverse()
+          var bidsData = data['bids'].slice(0, 10);
+
+          //asks.items = asksData;
+          asks.datasource = function(req) {
+            req.success(asksData, asksData.length);
+          };
+/*
+          if(!bids.datasource){
+            bids.datasource = bidsData;
+          } else {
+            bidsData.forEach(function(point, index){
+              bids.datasource[index][0] = point[0];
+              bids.datasource[index][1] = point[1];
+            });
+          }*/
+        });
+      }
+    });
+  </script>
+</dom-module>

@@ -14,7 +14,6 @@ router.get('/blahblah', function(req, res, next) {
     json: true
   }, function (error, response, body) {
     if (!error && response.statusCode === 200) {
-        console.log(body) // Print the json response
         body = answer;
     }
   })
@@ -23,9 +22,7 @@ router.get('/blahblah', function(req, res, next) {
 
 var tickerTimestamp = 0;
 router.get('/ticker', function(req, res, next) {
-  var json = pipe(req, res, 'https://www.bitstamp.net/api/ticker/');
-  console.log(json);
-  
+  pipe(req, res, 'https://www.bitstamp.net/api/ticker/');
 });
 
 router.get('/ticker_hour', function(req, res, next) {
@@ -37,7 +34,7 @@ router.get('/order_book', function(req, res, next) {
 });
 
 router.get('/transactions', function(req, res, next) {
-  pipe(req, res, 'https://www.bitstamp.net/api/transactions/');
+  pipe(req, res, 'https://www.bitstamp.net/api/transactions/?time=day');
 });
 
 

@@ -3,10 +3,14 @@
   "private": true,
   "dependencies": {
     "iron-elements": "PolymerElements/iron-elements#1.0.0",
+    "jquery": "~2.1.4",
+    "neon-elements": "PolymerElements/neon-elements#1.0.0",
+    "page": "visionmedia/page.js#~1.6.3",
     "paper-elements": "PolymerElements/paper-elements#1.0.1",
     "platinum-elements": "PolymerElements/platinum-elements#1.0.1",
-    "neon-elements": "PolymerElements/neon-elements#1.0.0",
-    "page": "visionmedia/page.js#~1.6.3"
+    "polymer": "Polymer/polymer#~1.1.4",
+    "vaadin-charts": "3.0.0-alpha6",
+    "vaadin-grid": "0.9.0-beta2"
   },
   "devDependencies": {
     "web-component-tester": "*",
