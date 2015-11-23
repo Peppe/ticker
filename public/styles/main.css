@@ -16,10 +16,7 @@ body {
 .ticker-header {
   background-color: #00b4f0;
   color:white;
-  padding-left:48px;
-  padding-right:8px;
-  padding-top:8px;
-  padding-bottom:8px;
+  padding: 8px 8px 8px 48px;
 }
 
 .ticker-header-first-row {
@@ -46,10 +43,6 @@ body {
   flex-direction: column;
 }
 
-.main-layout > p {
-  flex:1;
-}
-
 .ticker-content {
   flex:1;
   overflow:scroll;
@@ -68,37 +61,17 @@ body {
   flex:1;
 }
 
-paper-material {
-  border-radius: 2px;
-  height: 100%;
-  padding: 16px 0 16px 0;
-  width: calc(98.66% - 16px);
-  margin: 16px auto;
-  background: #FFF;
-}
-
-.v-grid-body.v-grid tr.v-grid {
+/** For some reason these don't work if they are in price-tables.html */
+.vaadin-grid-body.vaadin-grid tr.vaadin-grid {
   height: 20px;
 }
 
-.v-grid-header.v-grid tr.v-grid {
+.vaadin-grid-header.vaadin-grid tr.vaadin-grid {
     height: 20px;
 }
-.v-grid-cell.v-grid {
+.vaadin-grid-cell.vaadin-grid {
     transition: none;
 }
-.v-grid-row.v-grid:after {
+.vaadin-grid-row.vaadin-grid:after {
     transition: none;
-}
-
-.floatleft {
-  float: left;
-}
-
-.floatright {
-  float: right;
-}
-
-.floatclear {
-  clear: both;
 }

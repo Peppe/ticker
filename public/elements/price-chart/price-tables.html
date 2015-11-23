@@ -5,8 +5,8 @@
       flex-direction:column;
       flex:1;
     }
-    
-    #trade_asks, 
+
+    #trade_asks,
     #trade_bids {
       /* v-grid seems to be broken for this to work */
       flex: 1;
@@ -40,9 +40,23 @@
       font-size: 12px;
       color: #aaa;
     }
+
+    .floatleft {
+      float: left;
+    }
+
+    .floatright {
+      float: right;
+    }
+
+    .floatclear {
+      clear: both;
+    }
+
+
   </style>
   <template>
-    <v-grid id="trade_asks">
+    <vaadin-grid id="trade_asks">
       <table>
         <colgroup>
           <col header-text="Price on asks">
@@ -52,7 +66,7 @@
           <tr><td>Waiting for data...</td><td></td></tr>
         </tbody>
       </table>
-    </v-grid>
+    </vaadin-grid>
     <div style="text-align:center">
       <div id="price-wrapper" style="display:inline-block">
         <div id="price-volume" style="width:100%">
@@ -73,9 +87,9 @@
       </div>
     </div>
     <script>
-      
+
     </script>
-    <v-grid id="trade_bids">
+    <vaadin-grid id="trade_bids">
       <table>
         <colgroup>
           <col header-text="Price on bids">
@@ -85,14 +99,14 @@
           <tr><td>Waiting for data...</td><td></td></tr>
         </tbody>
       </table>
-    </v-grid>
+    </vaadin-grid>
   </template>
 
-  <script> 
+  <script>
     Polymer({
       is: 'price-tables',
 
-              properties: {
+      properties: {
         price: String,
         low: String,
         high: String,
@@ -102,41 +116,28 @@
       ready: function() {
         console.log("foo");
         var component = this;
+        //Update a first version of price/high/low/volume.
         $.getJSON( "/price/ticker", function( json ) {
           component.price = Number(json.last).toFixed(2);
           component.high = Number(json.high).toFixed(2);
           component.low = Number(json.low).toFixed(2);
           component.volume = Number(json.volume).toFixed(2);
-        }); 
+        });
+
         var pusher = new Pusher('de504dc5763aeef9ff52');
         var trades_channel = pusher.subscribe('live_trades');
         var component = this;
         trades_channel.bind('trade', function(data) {
           component.price = data['price'];
         });
-        
+
         var order_book = pusher.subscribe('order_book');
         order_book.bind('data', function(data) {
-          console.log("data recieved");
-          var asks = $("#trade_asks").get(0);
-          var bids = $("#trade_bids").get(0);
-          
           var asksData = data['asks'].slice(0, 10).reverse()
           var bidsData = data['bids'].slice(0, 10);
 
-          //asks.items = asksData;
-          asks.datasource = function(req) {
-            req.success(asksData, asksData.length);
-          };
-/*
-          if(!bids.datasource){
-            bids.datasource = bidsData;
-          } else {
-            bidsData.forEach(function(point, index){
-              bids.datasource[index][0] = point[0];
-              bids.datasource[index][1] = point[1];
-            });
-          }*/
+          $("#trade_asks").get(0).items = asksData;
+          $("#trade_bids").get(0).items = bidsData;
         });
       }
     });

@@ -39,17 +39,27 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     flex-direction: column;
   }
 
+  paper-material {
+    border-radius: 2px;
+    height: 100%;
+    padding: 16px 0 16px 0;
+    width: calc(98.66% - 16px);
+    margin: 16px auto;
+    background: #FFF;
+  }
+
+
   </style>
   <template>
     <div class="graphs-left-side">
-      <paper-material class="ticker-price" elevation="4" style="width:100%;margin-bottom:0;display:flex">
+      <paper-material class="ticker-price" elevation="4" style="width:100%;margin-bottom:0;display:flex;flex:1">
         <price-chart></price-chart>
       </paper-material>
       <paper-material class="ticker-volume" elevation="4" style="padding:0;width:100%">
         <volume-chart></volume-chart>
       </paper-material>
     </div>
-    
+
     <div class="graphs-right-side">
       <paper-material class="ticker-table" elevation="4">
         <price-tables></price-tables>
